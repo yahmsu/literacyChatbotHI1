@@ -398,8 +398,6 @@ final -> done
           "Take a moment to look at this image and its caption.\nBased on what you see and read, do you think this post is showing a real event that actually happened—or not?",
           {
             image: "https://i.imgur.com/yN8Xli5.png",
-            imageCaption:
-              "“Katy Perry stuns at the 2024 Met Gala! 🌹 Her floral-themed gown is a breathtaking tribute to nature and elegance. 🌸✨”",
             choices: [
               { label: "(1) Yes, it looks real to me", value: "1" },
               { label: "(2) No, I don’t think it’s real", value: "2" },
@@ -433,7 +431,6 @@ final -> done
             "Good eye! The face looks overly smooth, lacking natural skin texture or realistic lighting variation. The symmetry is also unusually perfect—more than you'd typically see in real human faces. These are common signs of AI-generated images.",
             {
               image: "https://i.imgur.com/CWioPs9.png",
-              imageCaption: "Zoomed-in facial area.",
             }
           );
         } else if (choice === "2") {
@@ -442,7 +439,6 @@ final -> done
             "That’s a common response. At first glance, this image does look convincing. But if you look closely, the face appears overly smooth, without natural skin texture or realistic lighting variation. The symmetry is also unusually perfect—something that often shows up in AI-generated images.",
             {
               image: "https://i.imgur.com/CWioPs9.png",
-              imageCaption: "Zoomed-in facial area.",
             }
           );
         } else {
@@ -451,7 +447,6 @@ final -> done
             "It’s totally understandable to be unsure. But there are clues: This face is overly smooth, lacks skin texture, and has symmetry that’s a little too perfect—classic signs of AI generation.",
             {
               image: "https://i.imgur.com/CWioPs9.png",
-              imageCaption: "Zoomed-in facial area.",
             }
           );
         }
@@ -481,7 +476,6 @@ final -> done
             "Great eye! Like in many AI-generated images, the hair strands appear clumped. The way the strands meet the background looks unnatural and overly blurred. These blending issues are typical signs of AI generation.",
             {
               image: "https://i.imgur.com/N3u7nfP.png",
-              imageCaption: "Notice the edges where hair meets the background.",
             }
           );
         } else if (choice === "2") {
@@ -490,7 +484,6 @@ final -> done
             "Easy to miss! But if you look again, the hair strands appear clumped. The way the strands meet the background looks unnatural and overly blurred. These blending issues are typical signs of AI generation.",
             {
               image: "https://i.imgur.com/N3u7nfP.png",
-              imageCaption: "Notice the edges where hair meets the background.",
             }
           );
         } else {
@@ -499,7 +492,6 @@ final -> done
             "It’s okay to be unsure—this one’s subtle. But take a closer look: the hair strands appear clumped, and the way they meet the background looks unnatural and overly blurred. These blending issues are typical signs of AI generation.",
             {
               image: "https://i.imgur.com/N3u7nfP.png",
-              imageCaption: "Notice the edges where hair meets the background.",
             }
           );
         }
@@ -529,7 +521,6 @@ final -> done
             "Exactly. If you look closely, some cameras are merged with people’s hands or float unnaturally. Several lenses look distorted or misshaped. And in the background, many faces seem vague, duplicated, or warped—classic signs of AI generation.",
             {
               image: "https://i.imgur.com/qYmNxeQ.png",
-              imageCaption: "Check the cameras, hands, and background faces.",
             }
           );
         } else if (choice === "2") {
@@ -538,7 +529,6 @@ final -> done
             "Totally understandable—these issues are easy to overlook. But take a closer look: some cameras appear merged with people’s hands or float oddly. The lenses look distorted, and several background faces are vague, duplicated, or warped—these are common AI artifacts.",
             {
               image: "https://i.imgur.com/qYmNxeQ.png",
-              imageCaption: "Check the cameras, hands, and background faces.",
             }
           );
         } else {
@@ -547,7 +537,6 @@ final -> done
             "No worries—it can be hard to tell. But here’s what to notice: some cameras seem to merge with people’s hands or float in unnatural ways. Lens shapes are distorted, and many background faces are vague, duplicated, or oddly warped. These subtle glitches often signal AI generation.",
             {
               image: "https://i.imgur.com/qYmNxeQ.png",
-              imageCaption: "Check the cameras, hands, and background faces.",
             }
           );
         }
@@ -728,7 +717,6 @@ final -> done
             "Great catch! If you look closely, their bodies seem to be fused together, and the girl in front appears to have no legs, which is a classic AI glitch. These kinds of unnatural merges are hallmark clues in AI-generated imagery. It is always worth pausing to spot inconsistencies before trusting what you see.",
             {
               image: "https://i.imgur.com/sAc4ucy.png",
-              imageCaption: "Note body fusion / missing legs.",
             }
           );
         } else if (choice === "2") {
@@ -737,7 +725,6 @@ final -> done
             'Don’t worry—answering "No" is a common first reaction. But take another careful look: their bodies seem to be fused together, and the girl in front appears to have no legs, which is a classic AI glitch. These visual overlaps often slip through in AI composites—next time, try zooming in or comparing with reliable sources to confirm authenticity.',
             {
               image: "https://i.imgur.com/sAc4ucy.png",
-              imageCaption: "Note body fusion / missing legs.",
             }
           );
         } else {
@@ -746,7 +733,6 @@ final -> done
             "Feeling unsure is totally normal! Here’s the key clue: their bodies seem to be fused together, and the girl in front appears to have no legs, which is a classic AI glitch. When you notice these physical impossibilities, it’s a strong sign the image isn’t genuine. It is always good to dig a little deeper!",
             {
               image: "https://i.imgur.com/sAc4ucy.png",
-              imageCaption: "Note body fusion / missing legs.",
             }
           );
         }
@@ -773,7 +759,6 @@ final -> done
             "Great—you caught it! The patterns of the fabrics are also blurred in the circled area, which is a classic AI glitch. Synthetic images often display unnatural texture details, so it’s always worth zooming in to check for such anomalies.",
             {
               image: "https://i.imgur.com/naZQXjD.png",
-              imageCaption: "Blurred / smeared fabric patterns.",
             }
           );
         } else if (choice === "2") {
@@ -782,7 +767,6 @@ final -> done
             "No worries—this one can be easy to miss. If you look again, you’ll see the fabric patterns in the circled area are blurred, another hallmark of AI generation. Next time, try zooming in or comparing the image with a known authentic image to spot these texture irregularities.",
             {
               image: "https://i.imgur.com/naZQXjD.png",
-              imageCaption: "Blurred / smeared fabric patterns.",
             }
           );
         } else {
@@ -791,7 +775,6 @@ final -> done
             "It’s perfectly normal to be unsure—this glitch is subtle. The patterns of the fabrics are blurred in the circled area, which is a classic AI glitch that distorts textures. Noticing these kinds of irregularities can really help you distinguish real photos from AI-generated ones.",
             {
               image: "https://i.imgur.com/naZQXjD.png",
-              imageCaption: "Blurred / smeared fabric patterns.",
             }
           );
         }
@@ -886,6 +869,13 @@ final -> done
         currentState = "done";
       }
 
+       function goBackTOQualtrics() {
+        appendMessage(
+          "bot",
+          "You are all set now! Please go back to the survey page to continue",
+        );
+        currentState = "done";
+      }
       /* ------------------------------------------------------------------
    5. NATURAL LANGUAGE PARSER (normalizeInput) + STATE MAPPING
 ------------------------------------------------------------------ */

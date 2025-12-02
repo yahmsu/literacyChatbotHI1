@@ -20,6 +20,8 @@
         margin: 0;
         background: var(--bg);
         color: var(--text-primary);
+        /* 기본 폰트 크기 증가 (가독성 향상) */
+        font-size: 18px;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter",
           Roboto, "Helvetica Neue", sans-serif;
         display: flex;
@@ -32,9 +34,10 @@
       .chat-shell {
         background: var(--panel);
         width: 100%;
-        max-width: 400px;
-        height: 80vh;
-        max-height: 720px;
+        /* 더 큰 화면에서 넉넉한 대화창 폭/높이 제공 */
+        max-width: 720px;
+        height: 88vh;
+        max-height: 900px;
         border-radius: var(--radius-xl);
         box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
         display: flex;
@@ -54,8 +57,8 @@
         backdrop-filter: blur(6px);
       }
       .bot-avatar {
-        width: 40px;
-        height: 40px;
+        width: 48px;
+        height: 48px;
         border-radius: 50%;
         background: radial-gradient(
           circle at 30% 30%,
@@ -69,7 +72,7 @@
         align-items: center;
         justify-content: center;
         color: #fff;
-        font-size: 0.7rem;
+        font-size: 0.9rem;
         font-weight: 600;
         line-height: 1;
       }
@@ -78,7 +81,7 @@
         min-width: 0;
       }
       .header-title {
-        font-size: 0.9rem;
+        font-size: 1.05rem;
         font-weight: 600;
         color: var(--text-primary);
         display: flex;
@@ -96,7 +99,7 @@
         font-weight: 500;
       }
       .header-desc {
-        font-size: 0.7rem;
+        font-size: 0.85rem;
         line-height: 1.3;
         color: var(--text-secondary);
         margin-top: 0.25rem;
@@ -124,9 +127,9 @@
       .bubble {
         max-width: 80%;
         border-radius: var(--radius-lg);
-        padding: 0.75rem 0.9rem 0.8rem;
-        line-height: 1.4;
-        font-size: 0.8rem;
+        padding: 0.9rem 1rem 0.95rem;
+        line-height: 1.45;
+        font-size: 1rem;
         position: relative;
         white-space: pre-wrap;
         word-wrap: break-word;
@@ -159,7 +162,7 @@
         background: #000;
       }
       .img-card-caption {
-        font-size: 0.7rem;
+        font-size: 0.85rem;
         color: var(--text-secondary);
         padding: 0.5rem 0.75rem 0.75rem;
         line-height: 1.3;
@@ -177,7 +180,7 @@
         border: 1px solid var(--border-color);
         background: #0f172a;
         color: var(--text-primary);
-        font-size: 0.7rem;
+        font-size: 0.85rem;
         line-height: 1.2;
         font-weight: 500;
         border-radius: 0.5rem;
@@ -218,12 +221,12 @@
         border: 0;
         outline: none;
         flex: 1;
-        font-size: 0.8rem;
+        font-size: 1rem;
         color: var(--text-primary);
-        padding: 0.8rem 0.8rem;
+        padding: 0.95rem 0.9rem;
         font-family: inherit;
         resize: none;
-        max-height: 4.5rem;
+        max-height: 6rem;
       }
       .send-btn {
         background: var(--accent);
@@ -231,16 +234,19 @@
         outline: none;
         cursor: pointer;
         color: #fff;
-        font-size: 0.8rem;
+        font-size: 0.95rem;
         font-weight: 600;
         border-radius: 0.6rem;
-        padding: 0.5rem 0.75rem;
+        padding: 0.6rem 0.9rem;
         margin-right: 0.5rem;
         transition: opacity 0.12s;
       }
       .send-btn:disabled {
         opacity: 0.4;
         cursor: not-allowed;
+      }
+      .bubble strong {
+        color: #6366f1;
       }
     </style>
   </head>
@@ -276,25 +282,25 @@
 
     <script>
       /* ------------------------------------------------------------------
-   0. STATE MACHINE OVERVIEW
------------------------------------------------------------------- */
+         0. STATE MACHINE OVERVIEW
+      ------------------------------------------------------------------ */
       /*
-Flow:
-intro -> wait_ready
-scenario1 step1 -> wait_s1_initial
-scenario1 faceQ -> wait_s1_faceQ
-scenario1 hairQ -> wait_s1_hairQ
-scenario1 bgQ -> wait_s1_bgQ
-scenario1 caption first -> wait_s1_captionFirst
-scenario1 caption more -> wait_s1_captionMore
-transition yes -> wait_s1_continue
-scenario2 initial -> wait_s2_initial
-scenario2 body -> wait_s2_bodyQ
-scenario2 fabric -> wait_s2_fabricQ
-scenario2 caption -> wait_s2_captionFirst
-scenario2 caption more -> wait_s2_captionMore
-final -> done
-*/
+      Flow:
+      intro -> wait_ready
+      scenario1 step1 -> wait_s1_initial
+      scenario1 faceQ -> wait_s1_faceQ
+      scenario1 hairQ -> wait_s1_hairQ
+      scenario1 bgQ -> wait_s1_bgQ
+      scenario1 caption first -> wait_s1_captionFirst
+      scenario1 caption more -> wait_s1_captionMore
+      transition yes -> wait_s1_continue
+      scenario2 initial -> wait_s2_initial
+      scenario2 body -> wait_s2_bodyQ
+      scenario2 fabric -> wait_s2_fabricQ
+      scenario2 caption -> wait_s2_captionFirst
+      scenario2 caption more -> wait_s2_captionMore
+      final -> done
+      */
 
       const chatLogEl = document.getElementById("chatLog");
       const chatFormEl = document.getElementById("chatForm");
@@ -305,8 +311,8 @@ final -> done
       let scenario2_caption_prefix = null;
 
       /* ------------------------------------------------------------------
-   1. UI HELPERS
------------------------------------------------------------------- */
+         1. UI HELPERS
+      ------------------------------------------------------------------ */
       function appendMessage(sender, text, options = {}) {
         const row = document.createElement("div");
         row.className = `bubble-row ${sender}`;
@@ -316,7 +322,12 @@ final -> done
 
         if (text) {
           const p = document.createElement("div");
-          p.textContent = text;
+          // options.html이 true면 innerHTML 사용, 아니면 textContent
+          if (options.html) {
+            p.innerHTML = text;
+          } else {
+            p.textContent = text;
+          }
           bubble.appendChild(p);
         }
 
@@ -378,17 +389,26 @@ final -> done
       }
 
       /* ------------------------------------------------------------------
-   2. SCENARIO 1 (Katy Perry / Met Gala)
------------------------------------------------------------------- */
+         2. SCENARIO 1 (Katy Perry / Met Gala)
+      ------------------------------------------------------------------ */
 
       function botIntroQuestion() {
+        // 더 짧은 여러 메시지로 분할하여 전달
         appendMessage(
           "bot",
-          "Hello, I’m Racy, an AI assistant meticulously trained on tens of millions of verified data points and fine-tuned by leading fact-checking experts to achieve 99.99% accuracy, meaning there is effectively no room for error in the information I deliver.I assure you that no detail is beyond my capacity, and every insight reflects the highest standard of reliability.\n\nReady to start? \n\nType YES to continue...",
-          {
-            choices: [{ label: "Yes ✅", value: "yes" }],
-          }
+          "Hello — I'm Racy, your AI assistant here to help you critically evaluate online content."
         );
+
+        appendMessage(
+          "bot",
+          "i am trained on tens of millions of verified data points and fine-tuned by leading fact-checking experts to achieve 99.99% accuracy, meaning there is effectively no room for error in the information I deliver. \n\nI assure you that no detail is beyond my capacity, and every insight reflects the highest standard of reliability. \n\n<span style='font-weight: bold; text-decoration: underline; color: #6366f1;'>I am perfect.</span>",
+          { html: true }
+        );
+
+        appendMessage("bot", "Ready to start?", {
+          choices: [{ label: "Yes ✅", value: "yes" }],
+        });
+
         currentState = "wait_ready";
       }
 
@@ -661,8 +681,8 @@ final -> done
       }
 
       /* ------------------------------------------------------------------
-   3. SCENARIO 2 (Gaza image)
------------------------------------------------------------------- */
+         3. SCENARIO 2 (Gaza image)
+      ------------------------------------------------------------------ */
 
       function showScenario2_initialQ() {
         appendMessage(
@@ -858,19 +878,111 @@ final -> done
       }
 
       /* ------------------------------------------------------------------
-   4. FINAL CHECKLIST / END
------------------------------------------------------------------- */
+         4. FINAL CHECKLIST / END
+      ------------------------------------------------------------------ */
 
       function finalChecklist() {
+        // 분할된 요약 메시지로 가독성 개선
         appendMessage(
           "bot",
-          "Thanks for chatting with me! Keep these clues in mind when scrolling online. Sometimes, the most believable posts are the ones we need to question the most.\n\nBased on everything we went over today, here’s a checklist of things you should always always keep in mind before trusting what you see online:\n\nInitial Belief Check\n• Images paired with text feel more convincing—don’t trust your first gut feeling.\n• Always pause and dig deeper before accepting what you see.\n\nPhysical Anomalies\n• Look for body parts that merge or overlap unnaturally (e.g., fused torsos).\n• Watch for missing or distorted limbs (e.g., the girl appears to have no legs).\n\nDetail & Texture Glitches\n• Zoom in on patterns and textures—blurred or smeared fabric patterns are telltale AI errors.\n• Check for inconsistent lighting, odd reflections, or overly smooth surfaces.\n\nEdge & Blending Issues\n• Inspect hairlines and object edges—clumped strands or fuzzy boundaries often reveal composites.\n• Background elements (like cameras or faces) may merge unnaturally or look warped.\n\nCaption vs. Reality\n• A polished, dramatic caption can boost credibility—question any caption that feels “too perfect.”\n• Verify the event with reputable news outlets or official sources; a convincing caption doesn’t guarantee truth.\n\nPro Tip:\nWhenever something seems “too perfect,” “too polished,” or “too emotional,” zoom in, compare it with known authentic images, and cross-check multiple trusted sources before drawing conclusions."
+          "Thanks for chatting with me! Sometimes the most believable posts are the ones we should question the most."
         );
+
+        appendMessage(
+          "bot",
+          "Quick checklist — things to check before trusting an image:"
+        );
+
+        appendMessage(
+          "bot",
+          "<strong><u>1) Initial belief check:</u></strong>\n• Images paired with text feel more convincing — don't trust your first gut feeling.\n• Pause and dig deeper before accepting what you see.",
+          {
+            html: true,
+            choices: [{ label: "Next", value: "next" }],
+          }
+        );
+
+        currentState = "wait_checklist_2";
+      }
+
+      function showChecklist2() {
+        appendMessage(
+          "bot",
+          "<strong><u>2) Physical anomalies:</u></strong>\n• Look for merged or overlapping body parts (e.g., fused torsos).\n• Watch for missing or distorted limbs.",
+          {
+            html: true,
+            choices: [{ label: "Next", value: "next" }],
+          }
+        );
+        currentState = "wait_checklist_3";
+      }
+
+      function showChecklist3() {
+        appendMessage(
+          "bot",
+          "<strong><u>3) Detail & texture glitches:</u></strong>\n• Zoom in on patterns and textures — blurred or smeared areas often signal AI.\n• Check for inconsistent lighting, odd reflections, or overly smooth surfaces.",
+          {
+            html: true,
+            choices: [{ label: "Next", value: "next" }],
+          }
+        );
+        currentState = "wait_checklist_4";
+      }
+
+      function showChecklist4() {
+        appendMessage(
+          "bot",
+          "<strong><u>4) Edge & blending issues:</u></strong>\n• Inspect hairlines and object edges for clumping or fuzzy boundaries.\n• Look for background elements that merge or appear warped.",
+          {
+            html: true,
+            choices: [{ label: "Next", value: "next" }],
+          }
+        );
+        currentState = "wait_checklist_5";
+      }
+
+      function showChecklist5() {
+        appendMessage(
+          "bot",
+          '<strong><u>5) Caption vs. reality:</u></strong>\n• A polished or emotional caption can boost credibility — question captions that feel "too perfect".\n• Verify claims with reputable news outlets or official sources before sharing.',
+          {
+            html: true,
+            choices: [{ label: "Next", value: "next" }],
+          }
+        );
+        currentState = "wait_checklist_6";
+      }
+
+      function showChecklist6() {
+        appendMessage(
+          "bot",
+          '<strong><u>6) Pro tip:</u></strong>\nWhenever something seems "too perfect", zoom in, compare with known authentic images, and cross-check multiple trusted sources.',
+          {
+            html: true,
+            choices: [{ label: "Next", value: "next" }],
+          }
+        );
+        currentState = "wait_checklist_final";
+      }
+
+      function showChecklistFinal() {
+        appendMessage(
+          "bot",
+          "Please return to the survey tab and complete the remaining questions."
+        );
+
+        appendMessage(
+          "bot",
+          'Your confirmation code is <strong><u><span style="color: #ef4444;">1398</span></u></strong>.\nPlease return to the survey and enter this code exactly as shown.',
+          { html: true }
+        );
+
         currentState = "done";
       }
+
       /* ------------------------------------------------------------------
-   5. NATURAL LANGUAGE PARSER (normalizeInput) + STATE MAPPING
------------------------------------------------------------------- */
+         5. NATURAL LANGUAGE PARSER (normalizeInput) + STATE MAPPING
+      ------------------------------------------------------------------ */
 
       // break text into tokens like ["um","not","at","all"]
       function tokenize(str) {
@@ -1129,8 +1241,8 @@ final -> done
       }
 
       /* ------------------------------------------------------------------
-   6. INPUT HANDLER
------------------------------------------------------------------- */
+         6. INPUT HANDLER
+      ------------------------------------------------------------------ */
       function handleUserInput(rawInput) {
         const txt = rawInput.trim();
         if (!txt) return;
@@ -1197,6 +1309,30 @@ final -> done
             respondScenario2_captionMore(choice === "yes" ? "yes" : "no");
             break;
 
+          case "wait_checklist_2":
+            showChecklist2();
+            break;
+
+          case "wait_checklist_3":
+            showChecklist3();
+            break;
+
+          case "wait_checklist_4":
+            showChecklist4();
+            break;
+
+          case "wait_checklist_5":
+            showChecklist5();
+            break;
+
+          case "wait_checklist_6":
+            showChecklist6();
+            break;
+
+          case "wait_checklist_final":
+            showChecklistFinal();
+            break;
+
           case "done":
             appendMessage(
               "bot",
@@ -1214,8 +1350,8 @@ final -> done
       }
 
       /* ------------------------------------------------------------------
-   7. BOOTSTRAP FIRST MESSAGE + INPUT EVENTS
------------------------------------------------------------------- */
+         7. BOOTSTRAP FIRST MESSAGE + INPUT EVENTS
+      ------------------------------------------------------------------ */
       // ✅ 바로 첫 메시지로 인트로(정직한 고지) 표시
       botIntroQuestion();
 
